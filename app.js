@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:7071/api";
+const API_BASE_URL = "https://uservision-api-abdfdya4b2e3brcr.switzerlandnorth-01.azurewebsites.net/api";
 
 let mediaItems = [];
 
