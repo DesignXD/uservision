@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UserVision</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>UserVision</h1>
+    <p>User-generated stock footage platform</p>
+  </header>
+
+  <main>
+    <section class="upload-box">
+      <h2>Upload Media</h2>
+
+      <input type="text" id="titleInput" placeholder="Enter media title" />
+      <input type="text" id="tagsInput" placeholder="Enter tags e.g. nature, city, music" />
+      <input type="file" id="fileInput" accept="image/*,video/*,audio/*" />
+
+      <button onclick="uploadMedia()">Upload</button>
+
+      <p id="status"></p>
+    </section>
+
+    <section class="search-box">
+      <h2>Search Library</h2>
+      <input type="text" id="searchInput" placeholder="Search by title or tag" oninput="searchMedia()" />
+    </section>
+
+    <section>
+      <h2>Community Library</h2>
+      <div id="mediaGrid" class="media-grid"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
