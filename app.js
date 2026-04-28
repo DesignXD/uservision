@@ -41,10 +41,12 @@ async function uploadMedia() {
   }
 
   try {
-    status.textContent = "Uploading...";
+    status.textContent = "Converting file...";
     status.style.color = "black";
 
     const fileData = await fileToBase64(file);
+
+    status.textContent = "Sending to backend...";
 
     const response = await fetch(`${API_BASE_URL}/upload`, {
       method: "POST",
@@ -60,33 +62,26 @@ async function uploadMedia() {
       })
     });
 
+    const resultText = await response.text();
+    console.log("Upload response status:", response.status);
+    console.log("Upload response body:", resultText);
+
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Upload error:", errorText);
-      throw new Error(errorText);
+      throw new Error(resultText || "Upload failed.");
     }
+
+    status.textContent = "Upload successful!";
+    status.style.color = "green";
 
     titleInput.value = "";
     tagsInput.value = "";
     fileInput.value = "";
 
-    status.textContent = "Media uploaded to Azure Blob Storage!";
-    status.style.color = "green";
-
-    loadMedia();
+    await loadMedia();
   } catch (error) {
-    status.textContent = error.message;
+    console.error("Upload failed:", error);
+    status.textContent = error.message || "Upload failed.";
     status.style.color = "red";
-  }
-}
-
-async function loadMedia() {
-  try {
-    const response = await fetch(`${API_BASE_URL}/media`);
-    mediaItems = await response.json();
-    displayMedia(mediaItems);
-  } catch (error) {
-    console.error("Could not load media:", error);
   }
 }
 
