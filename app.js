@@ -61,7 +61,9 @@ async function uploadMedia() {
     });
 
     if (!response.ok) {
-      throw new Error("Upload failed.");
+      const errorText = await response.text();
+      console.error("Upload error:", errorText);
+      throw new Error(errorText);
     }
 
     titleInput.value = "";
