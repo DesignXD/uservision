@@ -85,6 +85,23 @@ async function uploadMedia() {
   }
 }
 
+async function loadMedia() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/media`);
+
+    if (!response.ok) {
+      throw new Error("Failed to load media.");
+    }
+
+    const data = await response.json();
+
+    mediaItems = data;
+    displayMedia(mediaItems);
+  } catch (error) {
+    console.error("Error loading media:", error);
+  }
+}
+
 function displayMedia(items) {
   const mediaGrid = document.getElementById("mediaGrid");
   mediaGrid.innerHTML = "";
