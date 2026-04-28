@@ -52,4 +52,4 @@ jobs:
           app-name: 'uservision-frontend'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BA0CFF1B5EF04D1C87B3ECA17F2CA74B }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_36A4438EAA174CC4A3254BC0A4626951 }}
