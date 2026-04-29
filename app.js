@@ -15,11 +15,22 @@ function fileToBase64(file) {
   });
 }
 
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
+}
+
 async function uploadMedia() {
   const titleInput = document.getElementById("titleInput");
   const tagsInput = document.getElementById("tagsInput");
   const fileInput = document.getElementById("fileInput");
   const status = document.getElementById("status");
+  const uploadButton = document.querySelector(".upload-box button");
 
   const title = titleInput.value.trim();
   const tags = tagsInput.value.split(",").map(tag => tag.trim()).filter(Boolean);
@@ -28,12 +39,15 @@ async function uploadMedia() {
   if (!title || !file) {
     status.textContent = "Please enter a title and choose a file.";
     status.style.color = "red";
+    showToast("Missing title or file");
     return;
   }
 
   try {
+    uploadButton.disabled = true;
+    uploadButton.textContent = "Uploading...";
     status.textContent = "Uploading...";
-    status.style.color = "black";
+    status.style.color = "#e5e7eb";
 
     const fileData = await fileToBase64(file);
 
@@ -50,16 +64,21 @@ async function uploadMedia() {
     }
 
     status.textContent = "Upload successful!";
-    status.style.color = "green";
+    status.style.color = "lightgreen";
 
     titleInput.value = "";
     tagsInput.value = "";
     fileInput.value = "";
 
+    showToast("Upload successful");
     await loadMedia();
   } catch (error) {
     status.textContent = error.message || "Upload failed.";
     status.style.color = "red";
+    showToast("Upload failed");
+  } finally {
+    uploadButton.disabled = false;
+    uploadButton.textContent = "Upload";
   }
 }
 
@@ -72,9 +91,10 @@ async function loadMedia() {
     }
 
     mediaItems = await response.json();
-    displayMedia(mediaItems);
+    applyFiltersAndSort();
   } catch (error) {
     console.error("Error loading media:", error);
+    showToast("Could not load media");
   }
 }
 
@@ -132,105 +152,11 @@ function displayMedia(items) {
     mediaGrid.appendChild(card);
   });
 }
-function searchMedia() {
-  const searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
-
-  if (!searchTerm) {
-    displayMedia(mediaItems);
-    return;
-  }
-
-  const filtered = mediaItems.filter(item => {
-    const title = (item.title || "").toLowerCase();
-    const fileName = (item.fileName || "").toLowerCase();
-    const tags = Array.isArray(item.tags)
-      ? item.tags.map(tag => String(tag).toLowerCase().trim())
-      : [];
-
-    return title.includes(searchTerm) ||
-      fileName.includes(searchTerm) ||
-      tags.some(tag => tag.includes(searchTerm));
-  });
-
-  displayMedia(filtered);
-}
-
-function downloadMedia(url) {
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "";
-  link.target = "_blank";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-function toggleMenu(event, id) {
-  event.stopPropagation();
-
-  document.querySelectorAll(".dropdown-content").forEach(menu => {
-    if (menu.id !== `menu-${id}`) {
-      menu.classList.remove("show");
-    }
-  });
-
-  const menu = document.getElementById(`menu-${id}`);
-  menu.classList.toggle("show");
-}
-
-document.addEventListener("click", () => {
-  document.querySelectorAll(".dropdown-content").forEach(menu => {
-    menu.classList.remove("show");
-  });
-});
-
-async function editMedia(id) {
-  const item = mediaItems.find(m => m.id === id);
-
-  const newTitle = prompt("Edit title:", item.title);
-  const newTags = prompt("Edit tags (comma separated):", (item.tags || []).join(","));
-
-  if (!newTitle) return;
-
-  await fetch(`${API_BASE_URL}/edit`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      id,
-      title: newTitle,
-      tags: newTags.split(",").map(t => t.trim()).filter(Boolean)
-    })
-  });
-
-  loadMedia();
-}
-
-async function deleteMedia(id, blobName) {
-  if (!confirm("Are you sure you want to delete this item?")) return;
-
-  await fetch(`${API_BASE_URL}/delete`, {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id, blobName })
-  });
-
-  loadMedia();
-}
-
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-  toast.classList.add("show");
-
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2500);
-}
 
 function applyFiltersAndSort() {
-  const typeFilter = document.getElementById("typeFilter").value;
-  const sortOption = document.getElementById("sortOption").value;
-  const searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
+  const typeFilter = document.getElementById("typeFilter")?.value || "all";
+  const sortOption = document.getElementById("sortOption")?.value || "newest";
+  const searchTerm = document.getElementById("searchInput")?.value.toLowerCase().trim() || "";
 
   let filtered = [...mediaItems];
 
@@ -271,4 +197,88 @@ function applyFiltersAndSort() {
   }
 
   displayMedia(filtered);
+}
+
+function searchMedia() {
+  applyFiltersAndSort();
+}
+
+function toggleMenu(event, id) {
+  event.stopPropagation();
+
+  document.querySelectorAll(".dropdown-content").forEach(menu => {
+    if (menu.id !== `menu-${id}`) {
+      menu.classList.remove("show");
+    }
+  });
+
+  const menu = document.getElementById(`menu-${id}`);
+  menu.classList.toggle("show");
+}
+
+document.addEventListener("click", () => {
+  document.querySelectorAll(".dropdown-content").forEach(menu => {
+    menu.classList.remove("show");
+  });
+});
+
+function downloadMedia(url) {
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "";
+  link.target = "_blank";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function editMedia(id) {
+  const item = mediaItems.find(m => m.id === id);
+
+  document.getElementById("editId").value = item.id;
+  document.getElementById("editTitle").value = item.title || "";
+  document.getElementById("editTags").value = (item.tags || []).join(", ");
+
+  document.getElementById("editModal").classList.add("show");
+}
+
+function closeEditModal() {
+  document.getElementById("editModal").classList.remove("show");
+}
+
+async function saveEdit() {
+  const id = document.getElementById("editId").value;
+  const title = document.getElementById("editTitle").value.trim();
+  const tags = document.getElementById("editTags").value
+    .split(",")
+    .map(tag => tag.trim())
+    .filter(Boolean);
+
+  if (!title) {
+    showToast("Title cannot be empty");
+    return;
+  }
+
+  await fetch(`${API_BASE_URL}/edit`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, title, tags })
+  });
+
+  closeEditModal();
+  showToast("Media updated");
+  await loadMedia();
+}
+
+async function deleteMedia(id, blobName) {
+  if (!confirm("Are you sure you want to delete this item?")) return;
+
+  await fetch(`${API_BASE_URL}/delete`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, blobName })
+  });
+
+  showToast("Media deleted");
+  await loadMedia();
 }
