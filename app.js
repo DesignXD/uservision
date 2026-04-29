@@ -362,21 +362,27 @@ function setupDragAndDrop() {
 function showPreview(file) {
   const preview = document.getElementById("preview");
   preview.innerHTML = "";
+  preview.classList.remove("has-preview");
 
   if (!file) return;
 
+  let element;
+
   if (file.type.startsWith("image")) {
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(file);
-    preview.appendChild(img);
+    element = document.createElement("img");
+    element.src = URL.createObjectURL(file);
   } else if (file.type.startsWith("video")) {
-    const video = document.createElement("video");
-    video.src = URL.createObjectURL(file);
-    video.controls = true;
-    preview.appendChild(video);
+    element = document.createElement("video");
+    element.src = URL.createObjectURL(file);
+    element.controls = true;
   } else {
     preview.innerHTML = "<p>Preview not available</p>";
+    preview.classList.add("has-preview");
+    return;
   }
+
+  preview.appendChild(element);
+  preview.classList.add("has-preview");
 }
 
 async function toggleFavorite(id) {
