@@ -2,10 +2,6 @@ const API_BASE_URL = "https://uservision-api-adbfdya4b2e3brcr.switzerlandnorth-0
 
 let mediaItems = [];
 
-window.onload = function () {
-  loadMedia();
-};
-
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
