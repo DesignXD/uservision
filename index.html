@@ -41,28 +41,36 @@
 </section>
 
     <section class="controls-box">
-  <h2>Browse Controls</h2>
-
-  <div class="controls-row">
-    <select id="typeFilter" onchange="applyFiltersAndSort()">
-      <option value="all">All media</option>
-      <option value="image">Images</option>
-      <option value="video">Videos</option>
-      <option value="audio">Audio</option>
-    </select>
-
-    <select id="sortOption" onchange="applyFiltersAndSort()">
-      <option value="newest">Newest first</option>
-      <option value="oldest">Oldest first</option>
-      <option value="az">Title A-Z</option>
-      <option value="za">Title Z-A</option>
-    </select>
-    <label class="favorite-filter">
-      <input type="checkbox" id="favoriteOnly" onchange="applyFiltersAndSort()" />
-      Show favorites only
-    </label>
-  </div>
-</section>
+      <h2>Browse Controls</h2>
+    
+      <div class="controls-row">
+        <div class="control-pill">
+          <span>▣</span>
+          <select id="typeFilter" onchange="applyFiltersAndSort()">
+            <option value="all">All media</option>
+            <option value="image">Images</option>
+            <option value="video">Videos</option>
+            <option value="audio">Audio</option>
+          </select>
+        </div>
+    
+        <div class="control-pill">
+          <span>↕</span>
+          <select id="sortOption" onchange="applyFiltersAndSort()">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="az">Title A-Z</option>
+            <option value="za">Title Z-A</option>
+          </select>
+        </div>
+    
+        <label class="favorite-filter">
+          <span>☆</span>
+          <span>Show favorites only</span>
+          <input type="checkbox" id="favoriteOnly" onchange="applyFiltersAndSort()" />
+        </label>
+      </div>
+    </section>
 
     <section>
       <h2>Community Library</h2>
