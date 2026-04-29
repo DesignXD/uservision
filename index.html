@@ -13,22 +13,20 @@
   </header>
 
   <main>
-    <section class="upload-box">
-      <h2>Upload Media</h2>
+    <div class="upload-box" id="dropArea">
+  <input type="text" id="titleInput" placeholder="Enter media title" />
+  <input type="text" id="tagsInput" placeholder="Enter tags e.g. nature, city" />
 
-      <input type="text" id="titleInput" placeholder="Enter media title" />
-      <input type="text" id="tagsInput" placeholder="Enter tags e.g. nature, city, music" />
-      <input type="file" id="fileInput" accept="image/*,video/*,audio/*" />
+  <div class="drop-zone" id="dropZone">
+    <p>📂 Drag & drop a file here or click to select</p>
+    <input type="file" id="fileInput" hidden />
+  </div>
 
-      <button onclick="uploadMedia()">Upload</button>
+  <div id="preview"></div>
 
-      <p id="status"></p>
-    </section>
-
-    <section class="search-box">
-      <h2>Search Library</h2>
-      <input type="text" id="searchInput" placeholder="Search by title or tag" oninput="searchMedia()" />
-    </section>
+  <button onclick="uploadMedia()">Upload</button>
+  <p id="status"></p>
+</div>
 
     <section class="controls-box">
   <h2>Browse Controls</h2>
