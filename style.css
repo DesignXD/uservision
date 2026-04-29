@@ -183,6 +183,32 @@ button:hover {
   font-weight: 700;
 }
 
+.card-actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.card-actions button {
+  flex: 1;
+  padding: 10px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+
+.card-actions button:nth-child(1) {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.card-actions button:nth-child(2) {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.card-actions button:nth-child(3) {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
 @media (max-width: 700px) {
   header {
     padding: 45px 18px 30px;
