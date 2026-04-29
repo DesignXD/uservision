@@ -518,6 +518,37 @@ button:disabled {
   color: #f8fafc;
 }
 
+.search-wrapper {
+  position: relative;
+}
+
+.clear-search {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+/* show when typing */
+.search-wrapper.has-value .clear-search {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.clear-search:hover {
+  color: #e5e7eb;
+  transform: translateY(-50%) scale(1.2);
+}
+
 @media (max-width: 900px) {
   .controls-row {
     grid-template-columns: 1fr;
