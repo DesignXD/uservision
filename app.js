@@ -115,7 +115,7 @@ function displayMedia(items) {
 
       <div class="card-actions">
         <button class="download-btn" onclick="downloadMedia('${item.url}')">
-          ⬇️
+          ↓
         </button>
 
         <div class="dropdown">
