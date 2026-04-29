@@ -126,7 +126,9 @@ function displayMedia(items) {
     card.innerHTML = `
       ${preview}
       <h3>${item.title || item.fileName}</h3>
-      <p><strong>File:</strong> ${item.fileName}</p>
+      <p class="file-name" title="${item.fileName}">
+        <strong>File:</strong> ${shortenFileName(item.fileName)}
+      </p>
       <p><strong>Date:</strong> ${new Date(item.uploadDate).toLocaleDateString()}</p>
 
       <div>
@@ -281,4 +283,9 @@ async function deleteMedia(id, blobName) {
 
   showToast("Media deleted");
   await loadMedia();
+}
+
+function shortenFileName(fileName) {
+  if (!fileName) return "";
+  return fileName.length > 24 ? fileName.slice(0, 12) + "..." + fileName.slice(-8) : fileName;
 }
