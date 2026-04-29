@@ -401,6 +401,30 @@ button:disabled {
   min-width: 0;
 }
 
+.clickable-tag {
+  cursor: pointer;
+  transition: 0.18s ease;
+}
+
+.clickable-tag:hover {
+  transform: translateY(-1px);
+  background: rgba(96, 165, 250, 0.28);
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 55px 20px;
+  border: 1px dashed rgba(148, 163, 184, 0.35);
+  border-radius: 22px;
+  color: #cbd5e1;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px;
+  color: #f8fafc;
+}
+
 @media (max-width: 700px) {
   header {
     padding: 45px 18px 30px;
