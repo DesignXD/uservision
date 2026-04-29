@@ -32,14 +32,18 @@
 
     <section class="search-box">
   <h2>Search Library</h2>
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="Search by title, filename, or tag"
-    oninput="searchMedia()"
-  />
+
+  <div class="search-wrapper">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search by title, filename, or tag"
+        oninput="searchMedia()"
+      />
+  
       <button class="clear-search" onclick="clearSearch()">✕</button>
-</section>
+    </div>
+  </section>
 
     <section class="controls-box">
       <h2>Browse Controls</h2>
