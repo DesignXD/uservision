@@ -147,6 +147,10 @@ function displayMedia(items) {
         <div class="dropdown">
           <button class="menu-btn" onclick="toggleMenu(event, '${item.id}')" title="More options">⋯</button>
 
+          <button class="favorite-btn ${item.isFavorite ? "active" : ""}" onclick="toggleFavorite('${item.id}')" title="Favorite">
+            ${item.isFavorite ? "★" : "☆"}
+          </button>
+
           <div class="dropdown-content" id="menu-${item.id}">
             <button onclick="editMedia('${item.id}')">Edit</button>
             <button onclick="deleteMedia('${item.id}', '${item.blobName}')">Delete</button>
@@ -163,6 +167,7 @@ function applyFiltersAndSort() {
   const typeFilter = document.getElementById("typeFilter")?.value || "all";
   const sortOption = document.getElementById("sortOption")?.value || "newest";
   const searchTerm = document.getElementById("searchInput")?.value.toLowerCase().trim() || "";
+  const favoriteOnly = document.getElementById("favoriteOnly")?.checked || false;
 
   let filtered = [...mediaItems];
 
@@ -353,4 +358,15 @@ function showPreview(file) {
   } else {
     preview.innerHTML = "<p>Preview not available</p>";
   }
+}
+
+async function toggleFavorite(id) {
+  await fetch(`${API_BASE_URL}/favorite`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id })
+  });
+
+  showToast("Favorite updated");
+  await loadMedia();
 }
