@@ -114,23 +114,23 @@ function displayMedia(items) {
       </div>
 
       <div class="card-actions">
-  <button class="download-btn" onclick="downloadMedia('${item.url}')">
-    ⬇️
-  </button>
+        <button class="download-btn" onclick="downloadMedia('${item.url}')">
+          ⬇️
+        </button>
 
-  <div class="dropdown">
-    <button class="menu-btn">⋯</button>
-    <div class="dropdown-content">
-      <button onclick="editMedia('${item.id}')">Edit</button>
-      <button onclick="deleteMedia('${item.id}', '${item.blobName}')">Delete</button>
-    </div>
-  </div>
-</div>
+        <div class="dropdown">
+          <button class="menu-btn">⋯</button>
+          <div class="dropdown-content">
+            <button onclick="editMedia('${item.id}')">Edit</button>
+            <button onclick="deleteMedia('${item.id}', '${item.blobName}')">Delete</button>
+          </div>
+        </div>
+      </div>
+    `;
 
     mediaGrid.appendChild(card);
   });
 }
-
 function searchMedia() {
   const searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
 
