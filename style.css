@@ -170,6 +170,32 @@ button:disabled {
   background: #020617;
 }
 
+#preview {
+  position: relative;
+}
+
+.preview-remove {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: 1px solid rgba(248, 113, 113, 0.6);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  font-size: 24px;
+  line-height: 1;
+  z-index: 10;
+}
+
+.preview-remove:hover {
+  transform: scale(1.08);
+  background: rgba(220, 38, 38, 1);
+}
+
 .controls-box {
   padding: 32px;
 }
