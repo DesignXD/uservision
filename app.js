@@ -183,3 +183,19 @@ function downloadMedia(url) {
   link.click();
   document.body.removeChild(link);
 }
+
+async function deleteMedia(id, blobName) {
+  if (!confirm("Are you sure you want to delete this item?")) return;
+
+  try {
+    await fetch(`${API_BASE_URL}/delete`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, blobName })
+    });
+
+    loadMedia();
+  } catch (error) {
+    console.error("Delete failed:", error);
+  }
+}
