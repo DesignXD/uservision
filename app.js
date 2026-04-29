@@ -147,7 +147,8 @@ function displayMedia(items) {
         ${item.isFavorite ? "★" : "☆"}
       </button>
       
-      <div class="card-actions">
+      <div class="card-divider"></div>
+        <div class="card-actions">
         <button class="download-btn" onclick="downloadMedia('${item.url}')" title="Download">
           ⤓
         </button>
