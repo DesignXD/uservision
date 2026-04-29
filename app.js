@@ -326,10 +326,16 @@ function setupDragAndDrop() {
   const dropZone = document.getElementById("dropZone");
   const fileInput = document.getElementById("fileInput");
 
-  dropZone.addEventListener("click", () => fileInput.click());
+  dropZone.addEventListener("click", (e) => {
+    if (e.target.id !== "fileInput") {
+      fileInput.click();
+    }
+  });
 
   fileInput.addEventListener("change", () => {
-    showPreview(fileInput.files[0]);
+    const file = fileInput.files[0];
+    document.getElementById("selectedFileName").textContent = file ? file.name : "No file chosen";
+    showPreview(file);
   });
 
   dropZone.addEventListener("dragover", e => {
@@ -347,6 +353,7 @@ function setupDragAndDrop() {
 
     const file = e.dataTransfer.files[0];
     fileInput.files = e.dataTransfer.files;
+    document.getElementById("selectedFileName").textContent = file ? file.name : "No file chosen";
 
     showPreview(file);
   });
