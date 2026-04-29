@@ -114,19 +114,20 @@ function displayMedia(items) {
       </div>
 
       <div class="card-actions">
-  <button class="download-btn" onclick="downloadMedia('${item.url}')" title="Download">
-    ⤓
-  </button>
+        <button class="download-btn" onclick="downloadMedia('${item.url}')" title="Download">
+          ⤓
+        </button>
 
-  <div class="dropdown">
-    <button class="menu-btn" onclick="toggleMenu(event, '${item.id}')" title="More options">⋯</button>
+        <div class="dropdown">
+          <button class="menu-btn" onclick="toggleMenu(event, '${item.id}')" title="More options">⋯</button>
 
-    <div class="dropdown-content" id="menu-${item.id}">
-      <button onclick="editMedia('${item.id}')">Edit</button>
-      <button onclick="deleteMedia('${item.id}', '${item.blobName}')">Delete</button>
-    </div>
-  </div>
-</div>
+          <div class="dropdown-content" id="menu-${item.id}">
+            <button onclick="editMedia('${item.id}')">Edit</button>
+            <button onclick="deleteMedia('${item.id}', '${item.blobName}')">Delete</button>
+          </div>
+        </div>
+      </div>
+    `;
 
     mediaGrid.appendChild(card);
   });
