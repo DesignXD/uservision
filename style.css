@@ -578,6 +578,19 @@ button:disabled {
   color: #cbd5e1;
 }
 
+.remove-file {
+  margin-top: 12px;
+  background: rgba(239, 68, 68, 0.18);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  box-shadow: none;
+}
+
+.remove-file:hover {
+  transform: none;
+  background: rgba(239, 68, 68, 0.28);
+}
+
 @media (max-width: 900px) {
   .controls-row {
     grid-template-columns: 1fr;
