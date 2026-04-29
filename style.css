@@ -559,6 +559,25 @@ button:disabled {
   transform: translateY(-50%) scale(1.2);
 }
 
+.file-picker-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(96, 165, 250, 0.18);
+  color: #93c5fd;
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+#selectedFileName {
+  margin-left: 10px;
+  color: #cbd5e1;
+}
+
 @media (max-width: 900px) {
   .controls-row {
     grid-template-columns: 1fr;
