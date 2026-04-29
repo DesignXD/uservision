@@ -184,6 +184,27 @@ function downloadMedia(url) {
   document.body.removeChild(link);
 }
 
+async function editMedia(id) {
+  const item = mediaItems.find(m => m.id === id);
+
+  const newTitle = prompt("Edit title:", item.title);
+  const newTags = prompt("Edit tags (comma separated):", item.tags.join(","));
+
+  if (!newTitle) return;
+
+  await fetch(`${API_BASE_URL}/edit`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      id,
+      title: newTitle,
+      tags: newTags.split(",").map(t => t.trim())
+    })
+  });
+
+  loadMedia();
+}
+
 async function deleteMedia(id, blobName) {
   if (!confirm("Are you sure you want to delete this item?")) return;
 
