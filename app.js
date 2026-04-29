@@ -72,6 +72,7 @@ async function uploadMedia() {
 
     showToast("Upload successful");
     await loadMedia();
+    document.getElementById("preview").innerHTML = "";
   } catch (error) {
     status.textContent = error.message || "Upload failed.";
     status.style.color = "red";
@@ -301,4 +302,59 @@ async function deleteMedia(id, blobName) {
 function shortenFileName(fileName) {
   if (!fileName) return "";
   return fileName.length > 24 ? fileName.slice(0, 12) + "..." + fileName.slice(-8) : fileName;
+}
+
+window.onload = function () {
+  setupDragAndDrop();
+  loadMedia();
+};
+
+function setupDragAndDrop() {
+  const dropZone = document.getElementById("dropZone");
+  const fileInput = document.getElementById("fileInput");
+
+  dropZone.addEventListener("click", () => fileInput.click());
+
+  fileInput.addEventListener("change", () => {
+    showPreview(fileInput.files[0]);
+  });
+
+  dropZone.addEventListener("dragover", e => {
+    e.preventDefault();
+    dropZone.classList.add("dragging");
+  });
+
+  dropZone.addEventListener("dragleave", () => {
+    dropZone.classList.remove("dragging");
+  });
+
+  dropZone.addEventListener("drop", e => {
+    e.preventDefault();
+    dropZone.classList.remove("dragging");
+
+    const file = e.dataTransfer.files[0];
+    fileInput.files = e.dataTransfer.files;
+
+    showPreview(file);
+  });
+}
+
+function showPreview(file) {
+  const preview = document.getElementById("preview");
+  preview.innerHTML = "";
+
+  if (!file) return;
+
+  if (file.type.startsWith("image")) {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    preview.appendChild(img);
+  } else if (file.type.startsWith("video")) {
+    const video = document.createElement("video");
+    video.src = URL.createObjectURL(file);
+    video.controls = true;
+    preview.appendChild(video);
+  } else {
+    preview.innerHTML = "<p>Preview not available</p>";
+  }
 }
