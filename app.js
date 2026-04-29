@@ -216,3 +216,59 @@ async function deleteMedia(id, blobName) {
 
   loadMedia();
 }
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2500);
+}
+
+function applyFiltersAndSort() {
+  const typeFilter = document.getElementById("typeFilter").value;
+  const sortOption = document.getElementById("sortOption").value;
+  const searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
+
+  let filtered = [...mediaItems];
+
+  if (typeFilter !== "all") {
+    filtered = filtered.filter(item =>
+      item.fileType && item.fileType.startsWith(typeFilter)
+    );
+  }
+
+  if (searchTerm) {
+    filtered = filtered.filter(item => {
+      const title = (item.title || "").toLowerCase();
+      const fileName = (item.fileName || "").toLowerCase();
+      const tags = Array.isArray(item.tags)
+        ? item.tags.map(tag => String(tag).toLowerCase().trim())
+        : [];
+
+      return title.includes(searchTerm) ||
+        fileName.includes(searchTerm) ||
+        tags.some(tag => tag.includes(searchTerm));
+    });
+  }
+
+  if (sortOption === "newest") {
+    filtered.sort((a, b) => new Date(b.uploadDate) - new Date(a.uploadDate));
+  }
+
+  if (sortOption === "oldest") {
+    filtered.sort((a, b) => new Date(a.uploadDate) - new Date(b.uploadDate));
+  }
+
+  if (sortOption === "az") {
+    filtered.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+  }
+
+  if (sortOption === "za") {
+    filtered.sort((a, b) => (b.title || "").localeCompare(a.title || ""));
+  }
+
+  displayMedia(filtered);
+}
