@@ -114,19 +114,19 @@ function displayMedia(items) {
       </div>
 
       <div class="card-actions">
-        <button class="download-btn" onclick="downloadMedia('${item.url}')">
-          ⤓
-        </button>
+  <button class="download-btn" onclick="downloadMedia('${item.url}')" title="Download">
+    ⤓
+  </button>
 
-        <div class="dropdown">
-          <button class="menu-btn">⋯</button>
-          <div class="dropdown-content">
-            <button onclick="editMedia('${item.id}')">Edit</button>
-            <button onclick="deleteMedia('${item.id}', '${item.blobName}')">Delete</button>
-          </div>
-        </div>
-      </div>
-    `;
+  <div class="dropdown">
+    <button class="menu-btn" onclick="toggleMenu(event, '${item.id}')" title="More options">⋯</button>
+
+    <div class="dropdown-content" id="menu-${item.id}">
+      <button onclick="editMedia('${item.id}')">Edit</button>
+      <button onclick="deleteMedia('${item.id}', '${item.blobName}')">Delete</button>
+    </div>
+  </div>
+</div>
 
     mediaGrid.appendChild(card);
   });
@@ -163,6 +163,25 @@ function downloadMedia(url) {
   link.click();
   document.body.removeChild(link);
 }
+
+function toggleMenu(event, id) {
+  event.stopPropagation();
+
+  document.querySelectorAll(".dropdown-content").forEach(menu => {
+    if (menu.id !== `menu-${id}`) {
+      menu.classList.remove("show");
+    }
+  });
+
+  const menu = document.getElementById(`menu-${id}`);
+  menu.classList.toggle("show");
+}
+
+document.addEventListener("click", () => {
+  document.querySelectorAll(".dropdown-content").forEach(menu => {
+    menu.classList.remove("show");
+  });
+});
 
 async function editMedia(id) {
   const item = mediaItems.find(m => m.id === id);
