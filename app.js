@@ -222,6 +222,7 @@ function applyFiltersAndSort() {
 }
 
 function searchMedia() {
+  updateSearchUI();
   applyFiltersAndSort();
 }
 
@@ -380,4 +381,23 @@ async function toggleFavorite(id) {
 
   showToast("Favorite updated");
   await loadMedia();
+}
+
+function clearSearch() {
+  const input = document.getElementById("searchInput");
+  input.value = "";
+  input.focus();
+  applyFiltersAndSort();
+  updateSearchUI();
+}
+
+function updateSearchUI() {
+  const wrapper = document.querySelector(".search-wrapper");
+  const input = document.getElementById("searchInput");
+
+  if (input.value.trim().length > 0) {
+    wrapper.classList.add("has-value");
+  } else {
+    wrapper.classList.remove("has-value");
+  }
 }
