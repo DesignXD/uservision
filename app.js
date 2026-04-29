@@ -182,6 +182,12 @@ function applyFiltersAndSort() {
     );
   }
 
+  if (favoriteOnly) {
+    filtered = filtered.filter(item =>
+      item.isFavorite === true || item.isFavorite === "true"
+    );
+  }
+
   if (searchTerm) {
     filtered = filtered.filter(item => {
       const title = (item.title || "").toLowerCase();
