@@ -30,11 +30,52 @@
       <input type="text" id="searchInput" placeholder="Search by title or tag" oninput="searchMedia()" />
     </section>
 
+    <section class="controls-box">
+  <h2>Browse Controls</h2>
+
+  <div class="controls-row">
+    <select id="typeFilter" onchange="applyFiltersAndSort()">
+      <option value="all">All media</option>
+      <option value="image">Images</option>
+      <option value="video">Videos</option>
+      <option value="audio">Audio</option>
+    </select>
+
+    <select id="sortOption" onchange="applyFiltersAndSort()">
+      <option value="newest">Newest first</option>
+      <option value="oldest">Oldest first</option>
+      <option value="az">Title A-Z</option>
+      <option value="za">Title Z-A</option>
+    </select>
+  </div>
+</section>
+
     <section>
       <h2>Community Library</h2>
       <div id="mediaGrid" class="media-grid"></div>
     </section>
   </main>
+
+  <div id="toast" class="toast"></div>
+
+<div id="editModal" class="modal-overlay">
+  <div class="modal">
+    <h2>Edit Media</h2>
+
+    <input type="hidden" id="editId" />
+
+    <label>Title</label>
+    <input type="text" id="editTitle" />
+
+    <label>Tags</label>
+    <input type="text" id="editTags" />
+
+    <div class="modal-actions">
+      <button onclick="saveEdit()">Save</button>
+      <button class="secondary-btn" onclick="closeEditModal()">Cancel</button>
+    </div>
+  </div>
+</div>
 
   <script src="app.js"></script>
 </body>
