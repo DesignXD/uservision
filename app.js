@@ -395,6 +395,8 @@ function updateSearchUI() {
   const wrapper = document.querySelector(".search-wrapper");
   const input = document.getElementById("searchInput");
 
+  if (!wrapper || !input) return;
+
   if (input.value.trim().length > 0) {
     wrapper.classList.add("has-value");
   } else {
