@@ -26,7 +26,7 @@ async function uploadMedia() {
   const tagsInput = document.getElementById("tagsInput");
   const fileInput = document.getElementById("fileInput");
   const status = document.getElementById("status");
-  const uploadButton = document.querySelector(".upload-box button");
+  const uploadButton = document.getElementById("uploadBtn");
 
   const title = titleInput.value.trim();
   const tags = tagsInput.value.split(",").map(tag => tag.trim()).filter(Boolean);
@@ -327,9 +327,8 @@ function setupDragAndDrop() {
   const fileInput = document.getElementById("fileInput");
 
   dropZone.addEventListener("click", (e) => {
-    if (e.target.id !== "fileInput") {
-      fileInput.click();
-    }
+    if (e.target.classList.contains("file-picker-btn")) return;
+    fileInput.click();
   });
 
   fileInput.addEventListener("change", () => {
@@ -353,15 +352,14 @@ function setupDragAndDrop() {
 
     const file = e.dataTransfer.files[0];
     fileInput.files = e.dataTransfer.files;
-    document.getElementById("selectedFileName").textContent = file ? file.name : "No file chosen";
 
+    document.getElementById("selectedFileName").textContent = file ? file.name : "No file chosen";
     showPreview(file);
   });
 }
 
 function showPreview(file) {
   const preview = document.getElementById("preview");
-  const removeBtn = document.getElementById("removeFileBtn");
 
   preview.innerHTML = "";
   preview.classList.remove("has-preview");
@@ -378,17 +376,17 @@ function showPreview(file) {
     element.src = URL.createObjectURL(file);
     element.controls = true;
   } else {
-    preview.innerHTML = "<p>Preview not available</p>";
+    preview.innerHTML = `
+      <button class="preview-remove" onclick="clearFile()">×</button>
+      <p>Preview not available</p>
+    `;
     preview.classList.add("has-preview");
-    removeBtn.style.display = "inline-block";
     return;
   }
 
+  preview.innerHTML = `<button class="preview-remove" onclick="clearFile()">×</button>`;
   preview.appendChild(element);
   preview.classList.add("has-preview");
-
-
-  removeBtn.style.display = "inline-block";
 }
 
 async function toggleFavorite(id) {
@@ -427,12 +425,10 @@ function clearFile() {
   const fileInput = document.getElementById("fileInput");
   const preview = document.getElementById("preview");
   const fileName = document.getElementById("selectedFileName");
-  const removeBtn = document.getElementById("removeFileBtn");
 
   fileInput.value = "";
   preview.innerHTML = "";
   preview.classList.remove("has-preview");
 
   fileName.textContent = "No file chosen";
-  removeBtn.style.display = "none";
 }
