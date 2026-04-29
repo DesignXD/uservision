@@ -102,14 +102,22 @@ async function loadMedia() {
   }
 }
 
-function displayMedia(items) {
-  const mediaGrid = document.getElementById("mediaGrid");
-  mediaGrid.innerHTML = "";
+card.innerHTML = `
+  ${preview}
+  <h3>${item.title || item.fileName}</h3>
+  <p><strong>File:</strong> ${item.fileName}</p>
+  <p><strong>Date:</strong> ${new Date(item.uploadDate).toLocaleDateString()}</p>
 
-  if (items.length === 0) {
-    mediaGrid.innerHTML = "<p>No media found.</p>";
-    return;
-  }
+  <div>
+    ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join("")}
+  </div>
+
+  <div class="card-actions">
+    <button onclick="downloadMedia('${item.url}')">Download</button>
+    <button onclick="editMedia('${item.id}')">Edit</button>
+    <button onclick="deleteMedia('${item.id}', '${item.blobName}')">Delete</button>
+  </div>
+`;
 
   items.forEach(item => {
     const card = document.createElement("div");
