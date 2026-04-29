@@ -186,27 +186,66 @@ button:hover {
 .card-actions {
   margin-top: 14px;
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.card-actions button {
-  flex: 1;
-  padding: 10px;
-  font-size: 13px;
+.download-btn {
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
-}
-
-.card-actions button:nth-child(1) {
+  font-size: 18px;
   background: linear-gradient(135deg, #22c55e, #16a34a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
-.card-actions button:nth-child(2) {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+/* Dropdown */
+.dropdown {
+  position: relative;
 }
 
-.card-actions button:nth-child(3) {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
+.menu-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 20px;
+  background: rgba(148, 163, 184, 0.2);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 45px;
+  background: rgba(30, 41, 59, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 12px;
+  padding: 8px;
+  min-width: 120px;
+  z-index: 10;
+}
+
+.dropdown-content button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #e5e7eb;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.dropdown-content button:hover {
+  background: rgba(148, 163, 184, 0.2);
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
 @media (max-width: 700px) {
