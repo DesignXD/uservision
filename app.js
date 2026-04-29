@@ -103,7 +103,12 @@ function displayMedia(items) {
   mediaGrid.innerHTML = "";
 
   if (items.length === 0) {
-    mediaGrid.innerHTML = "<p>No media found.</p>";
+    mediaGrid.innerHTML = `
+  <div class="empty-state">
+    <h3>✨ No media found</h3>
+    <p>Try changing your search, filters, or upload something new.</p>
+  </div>
+`;
     return;
   }
 
@@ -132,7 +137,9 @@ function displayMedia(items) {
       <p><strong>Date:</strong> ${new Date(item.uploadDate).toLocaleDateString()}</p>
 
       <div>
-        ${(item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join("")}
+        ${(item.tags || []).map(tag => `
+          <span class="tag clickable-tag" onclick="searchByTag('${tag}')">${tag}</span>
+        `).join("")}
       </div>
 
       <div class="card-actions">
@@ -223,6 +230,12 @@ document.addEventListener("click", () => {
     menu.classList.remove("show");
   });
 });
+
+function searchByTag(tag) {
+  document.getElementById("searchInput").value = tag;
+  applyFiltersAndSort();
+  showToast(`Showing results for "${tag}"`);
+}
 
 function downloadMedia(url) {
   const link = document.createElement("a");
