@@ -387,6 +387,20 @@ button:disabled {
   box-shadow: none;
 }
 
+.media-card p {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.media-card h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.media-card {
+  min-width: 0;
+}
+
 @media (max-width: 700px) {
   header {
     padding: 45px 18px 30px;
