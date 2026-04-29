@@ -361,6 +361,8 @@ function setupDragAndDrop() {
 
 function showPreview(file) {
   const preview = document.getElementById("preview");
+  const removeBtn = document.getElementById("removeFileBtn");
+
   preview.innerHTML = "";
   preview.classList.remove("has-preview");
 
@@ -378,11 +380,15 @@ function showPreview(file) {
   } else {
     preview.innerHTML = "<p>Preview not available</p>";
     preview.classList.add("has-preview");
+    removeBtn.style.display = "inline-block";
     return;
   }
 
   preview.appendChild(element);
   preview.classList.add("has-preview");
+
+
+  removeBtn.style.display = "inline-block";
 }
 
 async function toggleFavorite(id) {
@@ -415,4 +421,18 @@ function updateSearchUI() {
   } else {
     wrapper.classList.remove("has-value");
   }
+}
+
+function clearFile() {
+  const fileInput = document.getElementById("fileInput");
+  const preview = document.getElementById("preview");
+  const fileName = document.getElementById("selectedFileName");
+  const removeBtn = document.getElementById("removeFileBtn");
+
+  fileInput.value = "";
+  preview.innerHTML = "";
+  preview.classList.remove("has-preview");
+
+  fileName.textContent = "No file chosen";
+  removeBtn.style.display = "none";
 }
